@@ -10,14 +10,17 @@ function VaultDoor({ unlocked }: { unlocked: boolean }) {
 
   useFrame(() => {
     if (ref.current) {
-      ref.current.rotation.y = THREE.MathUtils.lerp(ref.current.rotation.y, targetRotation, 0.05);
+      ref.current.rotation.y = THREE.MathUtils.lerp(
+        ref.current.rotation.y,
+        targetRotation,
+        0.05
+      );
     }
   });
 
   return (
     <group ref={ref}>
       <RoundedBox args={[3, 3, 0.3]} radius={0.1} position={[0, 0, 0]}>
-        {/* Native Three.js material - lowercase JSX tag */}
         <meshPhysicalMaterial
           color="#1a1a2e"
           metalness={0.9}
@@ -44,7 +47,10 @@ export default function VaultScene({ unlocked }: { unlocked: boolean }) {
 
   useEffect(() => {
     const checkDevice = () => {
-      setIsMobile(window.innerWidth < 768 || (navigator.hardwareConcurrency ?? 4) <= 4);
+      const mobile =
+        window.innerWidth < 768 ||
+        (navigator.hardwareConcurrency ?? 4) <= 4;
+      setIsMobile(mobile);
     };
     checkDevice();
     window.addEventListener('resize', checkDevice);
@@ -71,4 +77,4 @@ export default function VaultScene({ unlocked }: { unlocked: boolean }) {
       </Canvas>
     </div>
   );
-                                                              }
+  }
