@@ -22,8 +22,7 @@ Zero-knowledge architecture. No AI. No backend. Pure cryptographic engineering.
 - Auto-lock on tab blur + idle timeout
 - Strict CSP headers
 
-## 📄 License
-
+- 
 ## 📄 License
 
 This project is licensed under the **Sayanox License, Version 1.1**.  
