@@ -24,6 +24,14 @@ Zero-knowledge architecture. No AI. No backend. Pure cryptographic engineering.
 
 ## 📄 License
 
+## 📄 License
+
+This project is licensed under the **Sayanox License, Version 1.1**.  
+See the [LICENSE](LICENSE) file for details.
+
+[![License: Sayanox 1.1](https://img.shields.io/badge/License-Sayanox%201.1-green.svg)](https://github.com/sayan9168/sayanox-license)
+
+
 **SAYANOX V1.1**  
 Copyright © 2026 SayanOX Private Limited. All rights reserved.  
 Unauthorized reproduction, distribution, or modification is strictly prohibited.
