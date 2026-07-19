@@ -15,7 +15,8 @@ export async function deriveKey(password: string, salt?: Uint8Array) {
     ['deriveKey']
   );
 
-  const finalSalt: Uint8Array = salt ?? crypto.getRandomValues(new Uint8Array(SALT_LENGTH));
+  const finalSalt: Uint8Array =
+    salt ?? crypto.getRandomValues(new Uint8Array(SALT_LENGTH));
 
   const key = await crypto.subtle.deriveKey(
     {
@@ -31,6 +32,23 @@ export async function deriveKey(password: string, salt?: Uint8Array) {
   );
 
   return { key, salt: finalSalt };
+}
+
+function uint8ToBase64(bytes: Uint8Array): string {
+  let binary = '';
+  for (let i = 0; i < bytes.length; i++) {
+    binary += String.fromCharCode(bytes[i]);
+  }
+  return btoa(binary);
+}
+
+function base64ToUint8(b64: string): Uint8Array {
+  const binary = atob(b64);
+  const bytes = new Uint8Array(binary.length);
+  for (let i = 0; i < binary.length; i++) {
+    bytes[i] = binary.charCodeAt(i);
+  }
+  return bytes;
 }
 
 export async function encrypt(data: string, password: string): Promise<string> {
@@ -50,12 +68,15 @@ export async function encrypt(data: string, password: string): Promise<string> {
   packed.set(iv, salt.length);
   packed.set(cipherArray, salt.length + iv.length);
 
-  return btoa(String.fromCharCode(...packed));
+  return uint8ToBase64(packed);
 }
 
-export async function decrypt(packedB64: string, password: string): Promise<string | null> {
+export async function decrypt(
+  packedB64: string,
+  password: string
+): Promise<string | null> {
   try {
-    const packed = Uint8Array.from(atob(packedB64), (c) => c.charCodeAt(0));
+    const packed = base64ToUint8(packedB64);
     const salt = packed.slice(0, SALT_LENGTH);
     const iv = packed.slice(SALT_LENGTH, SALT_LENGTH + IV_LENGTH);
     const ciphertext = packed.slice(SALT_LENGTH + IV_LENGTH);
@@ -72,4 +93,4 @@ export async function decrypt(packedB64: string, password: string): Promise<stri
   } catch {
     return null;
   }
-                            }
+}
